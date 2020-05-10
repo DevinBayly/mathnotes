@@ -32,7 +32,7 @@ let run = () => {
     let existing = ctx.getImageData(0, 0, can.width, can.height)
     can.width += 500
     can.height += 500
-    ctx.fillStyle = "#f9d899"
+    ctx.fillStyle = "white"
     ctx.fillRect(0, 0, can.width, can.height)
     ctx.putImageData(existing, 0, 0)
   }
@@ -432,7 +432,7 @@ class JSONReader {
 class CanvasLoader {
   constructor() {
     // look for active canvas file
-    let can = document.querySelector("canvas")
+    let can = document.querySelector("#canvas")
     let img = new Image()
     img.onload = () => {
       let ctx = can.getContext("2d")
@@ -440,8 +440,8 @@ class CanvasLoader {
       can.height = img.height
       ctx.drawImage(img, 0, 0)
     }
-    fetch("/retrieve/background").then(res => res.text()).then(t => {
-      img.src = t
+    performGet().then(res=> res.json()).then(j => {
+      img.src = JSON.parse(j).canvas_data
     })
   }
 }
@@ -469,7 +469,6 @@ class loadAllBtn {
   constructor() {
     this.btn = document.createElement("button")
     this.btn.innerHTML = "load all"
-    document.body.prepend(this.btn)
     this.btn.addEventListener("click", () => {
       this.load()
     })
@@ -527,7 +526,7 @@ class LoadBtn {
   load() {
     // call the json loader and the canvasloader
     let cl = new CanvasLoader()
-    let jl = new JSONReader()
+    //let jl = new JSONReader()
     //setInterval(() => {
     //  let dwnload = document.querySelector("#download")
     //  dwnload.click()
@@ -545,9 +544,9 @@ class ExportBtn {
       let info = this.retrieveInfo()
       // create a, and use for download
       // use performUpload
-      performUpload(JSON.stringify(info))
       // also canvas download
-      let canvas = document.querySelector("canvas").toDataURL()
+      let canvas = document.querySelector("#canvas").toDataURL()
+      performUpload(JSON.stringify({canvas_data:canvas}))
       //fetch("/background", { method: "POST", body: canvas })
     })
     document.body.prepend(this.btn)

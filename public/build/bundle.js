@@ -43,10 +43,6 @@ var app = (function () {
     function space() {
         return text(' ');
     }
-    function listen(node, event, handler, options) {
-        node.addEventListener(event, handler, options);
-        return () => node.removeEventListener(event, handler, options);
-    }
     function attr(node, attribute, value) {
         if (value == null)
             node.removeAttribute(attribute);
@@ -266,19 +262,6 @@ var app = (function () {
         dispatch_dev("SvelteDOMRemove", { node });
         detach(node);
     }
-    function listen_dev(node, event, handler, options, has_prevent_default, has_stop_propagation) {
-        const modifiers = options === true ? ["capture"] : options ? Array.from(Object.keys(options)) : [];
-        if (has_prevent_default)
-            modifiers.push('preventDefault');
-        if (has_stop_propagation)
-            modifiers.push('stopPropagation');
-        dispatch_dev("SvelteDOMAddEventListener", { node, event, handler, modifiers });
-        const dispose = listen(node, event, handler, options);
-        return () => {
-            dispatch_dev("SvelteDOMRemoveEventListener", { node, event, handler, modifiers });
-            dispose();
-        };
-    }
     function attr_dev(node, attribute, value) {
         attr(node, attribute, value);
         if (value == null)
@@ -449,9 +432,8 @@ ${JSON.stringify({starting:"text"})}
     };
 
     let performGet =()=> {
-        return fetch(`https://www.googleapis.com/drive/v3/files/${idFound}/?key=${API_KEY}&alt=media`,{
-        })
-    };
+        return fetch(`https://www.googleapis.com/drive/v3/files/${idFound}/?key=${API_KEY}&alt=media`)
+     };
     let performUpdate =(jdata)=> {
 
         let first = `--uploadboundary
@@ -503,19 +485,12 @@ ${JSON.stringify(jdata)}
     	let t3;
     	let button1;
     	let t5;
-    	let button2;
-    	let t7;
-    	let button3;
-    	let t9;
-    	let button4;
-    	let t11;
     	let pre;
-    	let t12;
+    	let t6;
     	let div0;
     	let canvas0;
-    	let t13;
+    	let t7;
     	let canvas1;
-    	let dispose;
 
     	const block = {
     		c: function create() {
@@ -524,45 +499,33 @@ ${JSON.stringify(jdata)}
     			p.textContent = "Drive API Quickstart";
     			t1 = space();
     			button0 = element("button");
-    			button0.textContent = "creatfile";
+    			button0.textContent = "Authorize";
     			t3 = space();
     			button1 = element("button");
-    			button1.textContent = "makenew";
+    			button1.textContent = "Sign Out";
     			t5 = space();
-    			button2 = element("button");
-    			button2.textContent = "getfile";
-    			t7 = space();
-    			button3 = element("button");
-    			button3.textContent = "Authorize";
-    			t9 = space();
-    			button4 = element("button");
-    			button4.textContent = "Sign Out";
-    			t11 = space();
     			pre = element("pre");
-    			t12 = space();
+    			t6 = space();
     			div0 = element("div");
     			canvas0 = element("canvas");
-    			t13 = space();
+    			t7 = space();
     			canvas1 = element("canvas");
     			add_location(p, file, 5, 4, 98);
+    			attr_dev(button0, "id", "authorize_button");
+    			set_style(button0, "display", "none");
     			add_location(button0, file, 8, 4, 193);
-    			add_location(button1, file, 9, 4, 249);
-    			add_location(button2, file, 10, 4, 298);
-    			attr_dev(button3, "id", "authorize_button");
-    			set_style(button3, "display", "none");
-    			add_location(button3, file, 11, 4, 349);
-    			attr_dev(button4, "id", "signout_button");
-    			set_style(button4, "display", "none");
-    			add_location(button4, file, 12, 4, 425);
+    			attr_dev(button1, "id", "signout_button");
+    			set_style(button1, "display", "none");
+    			add_location(button1, file, 9, 4, 269);
     			attr_dev(pre, "id", "content");
     			set_style(pre, "white-space", "pre-wrap");
-    			add_location(pre, file, 14, 4, 499);
+    			add_location(pre, file, 11, 4, 343);
     			attr_dev(canvas0, "id", "the-canvas");
-    			add_location(canvas0, file, 16, 6, 589);
+    			add_location(canvas0, file, 13, 6, 433);
     			attr_dev(div0, "id", "pdfcontainer");
-    			add_location(div0, file, 15, 4, 559);
+    			add_location(div0, file, 12, 4, 403);
     			attr_dev(canvas1, "id", "canvas");
-    			add_location(canvas1, file, 18, 4, 638);
+    			add_location(canvas1, file, 15, 4, 482);
     			add_location(div1, file, 4, 2, 88);
     		},
     		l: function claim(nodes) {
@@ -576,31 +539,18 @@ ${JSON.stringify(jdata)}
     			append_dev(div1, t3);
     			append_dev(div1, button1);
     			append_dev(div1, t5);
-    			append_dev(div1, button2);
-    			append_dev(div1, t7);
-    			append_dev(div1, button3);
-    			append_dev(div1, t9);
-    			append_dev(div1, button4);
-    			append_dev(div1, t11);
     			append_dev(div1, pre);
-    			append_dev(div1, t12);
+    			append_dev(div1, t6);
     			append_dev(div1, div0);
     			append_dev(div0, canvas0);
-    			append_dev(div1, t13);
+    			append_dev(div1, t7);
     			append_dev(div1, canvas1);
-
-    			dispose = [
-    				listen_dev(button0, "click", performUpload, false, false, false),
-    				listen_dev(button1, "click", brandNew, false, false, false),
-    				listen_dev(button2, "click", performGet, false, false, false)
-    			];
     		},
     		p: noop,
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div1);
-    			run_all(dispose);
     		}
     	};
 
@@ -754,8 +704,8 @@ ${JSON.stringify(jdata)}
       Notification.requestPermission();
       // background stuff
       let can = document.querySelector("#canvas");
-      can.width = window.innerWidth;
-      can.height = window.innerHeight;
+      can.width = 8000;
+      can.height = 8000;
       let ctx = can.getContext("2d");
       //setInterval(() => {
       //  can = document.querySelector("#canvas")
@@ -778,7 +728,7 @@ ${JSON.stringify(jdata)}
         let existing = ctx.getImageData(0, 0, can.width, can.height);
         can.width += 500;
         can.height += 500;
-        ctx.fillStyle = "#f9d899";
+        ctx.fillStyle = "white";
         ctx.fillRect(0, 0, can.width, can.height);
         ctx.putImageData(existing, 0, 0);
       };
@@ -1158,23 +1108,10 @@ ${JSON.stringify(jdata)}
       }
     }
 
-    class JSONReader {
-      constructor() {
-        // look for the active file
-        performGet().then(res => res.json()).then(rawText => {
-          let jsonArray = JSON.parse(rawText);
-          jsonArray.map(j => {
-            let noteele = new NoteElement([Math.abs(j.x), Math.abs(j.y)], j.value);
-            noteele.init();
-          });
-        });
-      }
-    }
-
     class CanvasLoader {
       constructor() {
         // look for active canvas file
-        let can = document.querySelector("canvas");
+        let can = document.querySelector("#canvas");
         let img = new Image();
         img.onload = () => {
           let ctx = can.getContext("2d");
@@ -1182,8 +1119,8 @@ ${JSON.stringify(jdata)}
           can.height = img.height;
           ctx.drawImage(img, 0, 0);
         };
-        fetch("/retrieve/background").then(res => res.text()).then(t => {
-          img.src = t;
+        performGet().then(res=> res.json()).then(j => {
+          img.src = JSON.parse(j).canvas_data;
         });
       }
     }
@@ -1192,7 +1129,6 @@ ${JSON.stringify(jdata)}
       constructor() {
         this.btn = document.createElement("button");
         this.btn.innerHTML = "load all";
-        document.body.prepend(this.btn);
         this.btn.addEventListener("click", () => {
           this.load();
         });
@@ -1250,7 +1186,7 @@ ${JSON.stringify(jdata)}
       load() {
         // call the json loader and the canvasloader
         let cl = new CanvasLoader();
-        let jl = new JSONReader();
+        //let jl = new JSONReader()
         //setInterval(() => {
         //  let dwnload = document.querySelector("#download")
         //  dwnload.click()
@@ -1268,9 +1204,9 @@ ${JSON.stringify(jdata)}
           let info = this.retrieveInfo();
           // create a, and use for download
           // use performUpload
-          performUpload(JSON.stringify(info));
           // also canvas download
-          let canvas = document.querySelector("canvas").toDataURL();
+          let canvas = document.querySelector("#canvas").toDataURL();
+          performUpload(JSON.stringify({canvas_data:canvas}));
           //fetch("/background", { method: "POST", body: canvas })
         });
         document.body.prepend(this.btn);
@@ -1298,7 +1234,6 @@ ${JSON.stringify(jdata)}
     window.onload =()=> {
     	handleClientLoad();
     	run$1();
-    	pdfrun();
     };
 
     return app;

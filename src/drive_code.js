@@ -137,9 +137,8 @@ ${JSON.stringify({starting:"text"})}
 }
 
 let performGet =()=> {
-    return fetch(`https://www.googleapis.com/drive/v3/files/${idFound}/?key=${API_KEY}&alt=media`,{
-    })
-}
+    return fetch(`https://www.googleapis.com/drive/v3/files/${idFound}/?key=${API_KEY}&alt=media`)
+ }
 let performUpdate =(jdata)=> {
 
     let first = `--uploadboundary
