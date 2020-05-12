@@ -1,2 +1,1255 @@
-var app=function(){"use strict";function e(){}function t(e){return e()}function n(){return Object.create(null)}function o(e){e.forEach(t)}function l(e){return"function"==typeof e}function i(e,t){return e!=e?t==t:e!==t||e&&"object"==typeof e||"function"==typeof e}let a;function s(e){a=e}const r=[],c=[],d=[],h=[],u=Promise.resolve();let p=!1;function m(e){d.push(e)}let g=!1;const f=new Set;function y(){if(!g){g=!0;do{for(let e=0;e<r.length;e+=1){const t=r[e];s(t),v(t.$$)}for(r.length=0;c.length;)c.pop()();for(let e=0;e<d.length;e+=1){const t=d[e];f.has(t)||(f.add(t),t())}d.length=0}while(r.length);for(;h.length;)h.pop()();p=!1,g=!1,f.clear()}}function v(e){if(null!==e.fragment){e.update(),o(e.before_update);const t=e.dirty;e.dirty=[-1],e.fragment&&e.fragment.p(e.ctx,t),e.after_update.forEach(m)}}const b=new Set;function w(e,t){-1===e.$$.dirty[0]&&(r.push(e),p||(p=!0,u.then(y)),e.$$.dirty.fill(0)),e.$$.dirty[t/31|0]|=1<<t%31}function x(i,r,c,d,h,u,p=[-1]){const g=a;s(i);const f=r.props||{},v=i.$$={fragment:null,ctx:null,props:u,update:e,not_equal:h,bound:n(),on_mount:[],on_destroy:[],before_update:[],after_update:[],context:new Map(g?g.$$.context:[]),callbacks:n(),dirty:p};let x=!1;var S,k;v.ctx=c?c(i,f,(e,t,...n)=>{const o=n.length?n[0]:t;return v.ctx&&h(v.ctx[e],v.ctx[e]=o)&&(v.bound[e]&&v.bound[e](o),x&&w(i,e)),t}):[],v.update(),x=!0,o(v.before_update),v.fragment=!!d&&d(v.ctx),r.target&&(r.hydrate?v.fragment&&v.fragment.l(function(e){return Array.from(e.childNodes)}(r.target)):v.fragment&&v.fragment.c(),r.intro&&((S=i.$$.fragment)&&S.i&&(b.delete(S),S.i(k))),function(e,n,i){const{fragment:a,on_mount:s,on_destroy:r,after_update:c}=e.$$;a&&a.m(n,i),m(()=>{const n=s.map(t).filter(l);r?r.push(...n):o(n),e.$$.on_mount=[]}),c.forEach(m)}(i,r.target,r.anchor),y()),s(g)}var S,k,$="AIzaSyAIYCyk2KaSfTyX67jJuNKYo-AZAtwwZ-U",E=["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];function L(){gapi.client.init({apiKey:$,clientId:"541857836176-ooorj15vavsg5e0h0c98jodmp5lt39js.apps.googleusercontent.com",discoveryDocs:E,scope:"https://www.googleapis.com/auth/drive"}).then((function(){gapi.auth2.getAuthInstance().isSignedIn.listen(C),C(gapi.auth2.getAuthInstance().isSignedIn.get()),S.onclick=T,k.onclick=j}),(function(e){I(JSON.stringify(e,null,2))}))}function C(e){e?(S.style.display="none",k.style.display="block",gapi.client.drive.files.list({pageSize:10,fields:"nextPageToken, files(id, name)"}).then((function(e){I("Files:");var t=e.result.files;if(t&&t.length>0)for(var n=0;n<t.length;n++){var o=t[n];I(o.name+" ("+o.id+")"),"notes.json"==o.name&&(A=o.id)}else I("No files found.")}))):(S.style.display="block",k.style.display="none")}function T(e){gapi.auth2.getAuthInstance().signIn()}function j(e){gapi.auth2.getAuthInstance().signOut()}function I(e){var t=document.getElementById("content"),n=document.createTextNode(e+"\n");t.appendChild(n)}let A;let D=e=>{A?(console.log("updating"),(e=>{let t='--uploadboundary\nContent-Disposition:form-data;name="metadata";filename="first"\nContent-Type: application/json; charset=UTF-8\n\n{"name":"notes.json","mimeType":"application/json"}\n',n=`--uploadboundary\nContent-Disposition:form-data;name="file";filename="blob"\nContent-Type: application/json\n\n${JSON.stringify(e)}\n--uploadboundary--`;fetch(`https://www.googleapis.com/upload/drive/v3/files/${A}/?uploadType=multipart&key=${$}&fields=id`,{method:"PATCH",headers:{"Content-type":"multipart/related; boundary=uploadboundary","Content-Length":(t+n).length,Authorization:"Bearer "+gapi.auth.getToken().access_token},body:t+n}).then(e=>e.json()).then(e=>console.log(e))})(e)):(console.log("creating anew"),(()=>{let e='--uploadboundary\nContent-Disposition:form-data;name="metadata";filename="first"\nContent-Type: application/json; charset=UTF-8\n\n{"name":"notes.json","mimeType":"application/json"}\n',t=`--uploadboundary\nContent-Disposition:form-data;name="file";filename="blob"\nContent-Type: application/json\n\n${JSON.stringify({starting:"text"})}\n--uploadboundary--\n    `;fetch(`https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&api=${$}&fields=id`,{method:"POST",headers:{"Content-type":"multipart/related; boundary=uploadboundary","Content-Length":(e+t).length,Authorization:"Bearer "+gapi.auth.getToken().access_token},body:e+t}).then(e=>e.json()).then(e=>console.log(e))})())};function P(t){let n;return{c(){var e;e="div",n=document.createElement(e),n.innerHTML='<p>Drive API Quickstart</p> \n    <button id="authorize_button" style="display: none;">Authorize</button> \n    <button id="signout_button" style="display: none;">Sign Out</button> \n\n    <pre id="content" style="white-space: pre-wrap;"></pre> \n    <div id="pdfcontainer"><canvas id="the-canvas"></canvas></div> \n    <canvas id="canvas"></canvas>'},m(e,t){!function(e,t,n){e.insertBefore(t,n||null)}(e,n,t)},p:e,i:e,o:e,d(e){var t;e&&(t=n).parentNode.removeChild(t)}}}let _=[];class O{constructor(e,t=""){let[n,o]=e;this.element=document.createElement("textarea"),this.element.style.position="absolute",this.element.style.left=n+"px",this.element.style.top=o+"px",this.element.value=t,this.element.style.width="200px",this.element.style.height="200px"}init(){document.body.append(this.element),this.element.focus(),this.element.selectionEnd+=2,this.keyactions()}mouseup(e){let t=this.func;document.body.removeEventListener("mousemove",t)}mousedown(e){console.log("down ");let t=this.element.getBoundingClientRect();if(e.pageX-(t.left+window.scrollX)<t.width/2){this.startx=e.pageX,this.starty=e.pageY,console.log("down ",this.startx,this.starty);let t=e=>{this.mousemove(e)};document.body.addEventListener("mousemove",t),this.func=t}}mousemove(e){let t=e.pageX,n=e.pageY,o=t-this.startx,l=n-this.starty;this.startx=t,this.starty=n,this.element.style.left=`${parseFloat(this.element.style.left)+o}px`,this.element.style.top=`${parseFloat(this.element.style.top)+l}px`}keyactions(){this.element.addEventListener("mousedown",this.mousedown.bind(this)),this.element.addEventListener("mouseup",this.mouseup.bind(this)),this.element.addEventListener("keydown",e=>{if("ArrowUp"==e.key&&this.imageob.shiftup(),"ArrowDown"==e.key&&this.imageob.shiftdown(),"ArrowRight"==e.key&&(this.pdfob.page+=1,this.pdfob.loadPage(this.pdfob.page)),"ArrowLeft"==e.key&&(this.pdfob.page-=1,this.pdfob.loadPage(this.pdfob.page)),"Enter"==e.key){let t=this.element.selectionStart,n=this.element.value.slice(0,t).split("\n").slice(-1)[0],o=/^\s*/.exec(n)[0];this.element.value=this.element.value.slice(0,t)+"\n"+o+this.element.value.slice(t),this.element.selectionStart=t+1+o.length,this.element.selectionEnd=this.element.selectionStart,e.preventDefault()}if("Control"==e.key&&(this.control=!0),"Alt"==e.key&&(e.preventDefault(),this.check()),"Tab"==e.key){e.preventDefault();let t=this.element.selectionStart;this.element.value=this.element.value.slice(0,t)+"  "+this.element.value.slice(t),this.element.selectionStart=t+2,this.element.selectionEnd=t+2}e.key}),this.element.addEventListener("keyup",e=>{"Control"==e.key&&(this.control=!1)})}calcHeight(){let e=Math.max(...this.element.value.split("\n").map(e=>e.length));this.element.style.width=`${8*e+30>150?150:8*e+30}px`,this.element.style.height=`${this.element.scrollHeight}px`}check(){if(console.log("checking"),/-write-/.exec(this.element.value)&&(this.element.value=this.element.value.replace(/-write-/,""),fetch("http://localhost:8040",{method:"POST",body:JSON.stringify({operation:"-savefile-",contents:this.filename+"\n"+this.element.value})})),/-file-/.exec(this.element.value)&&(this.element.value=this.element.value.replace(/-file-/,""),this.filename=this.element.value,fetch("http://localhost:8040",{method:"POST",body:JSON.stringify({operation:"-file-",contents:this.element.value})}).then(e=>e.text()).then(e=>{this.element.value=e})),/-loadimg .* -/.exec(this.element.value)){let e=this.element.value.match(/-loadimg (.*) -/)[1];this.imageob=(()=>{let e={ep:null,create:t=>{let n=new Image;n.src=t,n.onload=()=>{e.holder=document.querySelector("#pdfcontainer"),e.holder.style.overflow="scroll",e.holder.style.height="500px",e.holder.append(n)}},page:0,shiftup:()=>{e.page-=1,e.topCalc=e.holder.getBoundingClientRect().height*e.page,e.holder.scrollTop=e.topCalc,e.ep()},shiftdown:()=>{e.page+=1,e.topCalc=e.holder.getBoundingClientRect().height*e.page,e.holder.scrollTop=e.topCalc,e.ep()}};return e})(),this.imageob.create(e);let t=()=>{let e=this.element.value.split("\n");/-top/.exec(e.slice(-1)[0])&&(e.pop(),this.element.value=e.join("\n")),this.element.value+=`\n-top${this.imageob.topCalc}-`;let t=document.querySelector("#pdfcontainer");document.querySelector("#pdfcontainer").style.position="absolute",document.querySelector("#pdfcontainer").style.left=`${parseFloat(this.element.style.left)-t.getBoundingClientRect().width}px`};this.imageob.ep=t}if(/-loadpdf.* -/.exec(this.element.value)){let e=this.element.value.match(/-loadpdf(.*?) -/)[1];this.element.value=this.element.value.replace(/-loadpdf.*? -/,e),(async()=>{let e={};return e.ep=null,e.create=async t=>{let n=document.createElement("script");n.src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.3.200/build/pdf.min.js",document.body.append(n),e.pdfData=await fetch(`https://www.googleapis.com/drive/v3/files/${t}/?key=AIzaSyAIYCyk2KaSfTyX67jJuNKYo-AZAtwwZ-U&alt=media`).then(e=>e.arrayBuffer()),e.pdfjsLib=window["pdfjs-dist/build/pdf"],e.pdfjsLib.disableWorker=!0,e.pdf=e.pdfjsLib.getDocument({data:e.pdfData}).promise,e.holder=document.querySelector("#pdfcontainer");let o=document.createElement("button");o.innerHTML="left",o.style.position="relative",o.style.left="0px",o.style.bottom="0px",o.addEventListener("click",()=>{e.page-=1,e.loadPage(e.page)});let l=document.createElement("button");l.style.position="relative",l.style.right="0px",l.style.bottom="0px",l.innerHTML="right",l.addEventListener("click",()=>{e.page+=1,e.loadPage(e.page)}),e.holder.append(o),e.holder.append(l)},e.loadPage=t=>{e.page=parseInt(t),e.pdf.then(n=>{console.log("PDF loaded"),n.getPage(parseInt(t)).then((function(t){console.log("Page loaded");var n=t.getViewport({scale:1}),o=document.getElementById("the-canvas"),l=o.getContext("2d");o.height=n.height,o.width=n.width;var i={canvasContext:l,viewport:n};t.render(i).promise.then((function(){console.log("Page rendered")})),e.ep()}))})},e})().then(t=>{this.pdfob=t,this.pdfob.create(e);this.pdfob.ep=()=>{let e=this.element.value.split("\n");/-page/.exec(e.slice(-1)[0])&&(e.pop(),this.element.value=e.join("\n")),this.element.value+=`\n-page${this.pdfob.page}-`};let n=document.querySelector("#pdfcontainer");document.querySelector("#pdfcontainer").style.position="absolute",document.querySelector("#pdfcontainer").style.left=`${parseFloat(this.element.style.left)-n.getBoundingClientRect().width}px`,document.querySelector("#pdfcontainer").style.top=`${parseFloat(this.element.style.top)-n.getBoundingClientRect().height}px`})}if(/-page\d+-/.exec(this.element.value.slice(this.element.startSelection,this.element.endSelection))){let e=this.element.value.slice(this.element.startSelection,this.element.endSelection).match(/-page(\d+)-/)[1];this.pdfob.loadPage(e);let t=document.querySelector("#pdfcontainer");document.querySelector("#pdfcontainer").style.position="absolute",document.querySelector("#pdfcontainer").style.left=`${parseFloat(this.element.style.left)-t.getBoundingClientRect().width}px`}if(/-start-/.exec(this.element.value)&&(this.element.value=this.element.value.replace(/-start-/,"-running-"),this.begin=new Date,this.timeout=setTimeout(()=>{new Notification("20 mins passed")},12e5)),/-stop-/.exec(this.element.value)){this.end=new Date,this.element.value=this.element.value.replace(/-stop-/,"");let e=`${(new Date).toUTCString()}: ${((this.end.getTime()-this.begin.getTime())/6e4).toFixed(3)}`;this.element.value=this.element.value.replace(/-running-/,e);this.element.selectionStart;clearTimeout(this.timeout)}if(/-tex-/.exec(this.element.value)){let e=this.element;fetch("http://localhost:8040/",{method:"POST",body:JSON.stringify({operation:"-latex-",contents:this.element.value.replace(/-tex-/,"")})}).then(t=>{let n=new Image;n.onload=()=>{let t=e.getBoundingClientRect();document.querySelector("canvas").getContext("2d").drawImage(n,t.x+t.width,t.y+t.height)},fetch("./image.png").then(e=>e.blob()).then(e=>{n.src=URL.createObjectURL(e)})})}/-date-/.exec(this.element.value)&&(this.element.value=this.element.value.replace(/-date-/,""),fetch("http://localhost:8040",{method:"POST",body:JSON.stringify({operation:"-date-",contents:this.element.value})}).then(e=>e.text()).then(e=>{this.element.value=e}))}timer(){this.timer=setInterval(()=>{this.check()},1e4)}}class q{constructor(){let e=document.querySelector("#canvas"),t=new Image;t.onload=()=>{let n=e.getContext("2d");e.width=t.width,e.height=t.height,n.drawImage(t,0,0)},fetch(`https://www.googleapis.com/drive/v3/files/${A}/?key=${$}&alt=media`).then(e=>e.json()).then(e=>{t.src=JSON.parse(e).canvas_data})}}class B{constructor(){this.btn=document.createElement("button"),this.btn.innerHTML="load all",this.btn.addEventListener("click",()=>{this.load()})}load(){fetch("/all").then(e=>e.json()).then(e=>{this.select=document.createElement("select");for(let t of e){let e=document.createElement("option");e.value=`${t.id}`,e.innerHTML=`${t.size},${t.ctime}`,this.select.append(e)}document.body.prepend(this.select),this.select.onchange=()=>{this.select.value;fetch("/idfetch",{method:"POST",headers:{"Content-Type":"text/plain","Content-Length":this.select.value.length},body:this.select.value}).then(e=>e.json()).then(e=>{e.map(e=>{new O([Math.abs(e.x),Math.abs(e.y)],e.value).init()})})}})}}class N{constructor(){this.btn=document.createElement("button"),document.body.prepend(this.btn),this.btn.addEventListener("click",()=>{this.load()}),this.btn.id="reload",this.btn.innerHTML="Load prev data"}load(){new q}}class R{constructor(){this.btn=document.createElement("button"),this.btn.innerHTML="Download",this.btn.id="download",this.btn.addEventListener("click",()=>{this.retrieveInfo();let e=document.querySelector("#canvas").toDataURL();D(JSON.stringify({canvas_data:e}))}),document.body.prepend(this.btn)}retrieveInfo(){return Array(...document.querySelectorAll("textarea")).map(e=>{let t=e.getBoundingClientRect();return{x:t.x+window.scrollX,y:t.y+window.scrollY,value:e.value}})}}const M=new class extends class{$destroy(){!function(e,t){const n=e.$$;null!==n.fragment&&(o(n.on_destroy),n.fragment&&n.fragment.d(t),n.on_destroy=n.fragment=null,n.ctx=[])}(this,1),this.$destroy=e}$on(e,t){const n=this.$$.callbacks[e]||(this.$$.callbacks[e]=[]);return n.push(t),()=>{const e=n.indexOf(t);-1!==e&&n.splice(e,1)}}$set(){}}{constructor(e){super(),x(this,e,null,P,i,{})}}({target:document.body,props:{name:"world"}});return window.onload=()=>{S=document.getElementById("authorize_button"),k=document.getElementById("signout_button"),gapi.load("client:auth2",L),(()=>{Notification.requestPermission();let e=document.querySelector("#canvas");e.width=8e3,e.height=8e3;let t=e.getContext("2d"),n=(new R,new N,new B,()=>{let n=t.getImageData(0,0,e.width,e.height);e.width+=500,e.height+=500,t.fillStyle="white",t.fillRect(0,0,e.width,e.height),t.putImageData(n,0,0)}),o=!1,l=[0,0];document.body.addEventListener("keydown",i=>{let a={scrollx:window.scrollX,scrolly:window.scrollY},s=e=>{null==a.initialx&&(a.initialx=e.clientX,a.initialy=e.clientY),window.scrollTo(a.scrollx+2*(a.initialx-e.clientX),a.scrolly+4*(a.initialy-e.clientY))};if("Shift"==i.key&&e.addEventListener("mousemove",s),"p"==i.key&&o){let e=new Image;e.onload=()=>{t.drawImage(e,l[0],l[1])},fetch("./image.png").then(e=>e.blob()).then(t=>{e.src=URL.createObjectURL(t)})}if("N"==i.key&&o){o=!1,new O(l).init(),i.preventDefault()}let r=t=>{"Shift"==t.key&&(e.removeEventListener("mousemove",s),e.removeEventListener("keyup",r),(window.scrollX+50>window.scrollMaxX||window.scrollY+50>window.scrollMaxY)&&n())};document.body.addEventListener("keyup",r)});let i=e=>{l[0]=e.pageX,l[1]=e.pageY};e.addEventListener("mousemove",i);let a=[];e.addEventListener("mousedown",l=>{e.removeEventListener("mousemove",i),o=!0;let s=e.getBoundingClientRect(),r=l.clientX-s.left,c=l.clientY-s.topj,d=t=>{let o=e.getBoundingClientRect(),l=t.clientX-o.left,i=t.clientY-o.top;a.push(Math.round(l)),a.push(Math.round(i)),(l+50>e.width||i+50>e.height)&&n()};a.push(Math.round(r)),a.push(Math.round(c)),e.addEventListener("mousemove",d);let h=n=>{t.moveTo(a[0],a[1]),t.beginPath();for(let e=2;e<a.length;e+=2)t.lineTo(a[e],a[e+1]);t.stroke(),_=_.concat(a),_.push(0),a=[],e.removeEventListener("mousemove",d),e.removeEventListener("mouseup",h),e.addEventListener("mousemove",i)};e.addEventListener("mouseup",h)}),document.querySelector("#reload").click()})()},M}();
+
+(function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.head.appendChild(r) })(window.document);
+var app = (function () {
+    'use strict';
+
+    function noop() { }
+    function add_location(element, file, line, column, char) {
+        element.__svelte_meta = {
+            loc: { file, line, column, char }
+        };
+    }
+    function run(fn) {
+        return fn();
+    }
+    function blank_object() {
+        return Object.create(null);
+    }
+    function run_all(fns) {
+        fns.forEach(run);
+    }
+    function is_function(thing) {
+        return typeof thing === 'function';
+    }
+    function safe_not_equal(a, b) {
+        return a != a ? b == b : a !== b || ((a && typeof a === 'object') || typeof a === 'function');
+    }
+
+    function append(target, node) {
+        target.appendChild(node);
+    }
+    function insert(target, node, anchor) {
+        target.insertBefore(node, anchor || null);
+    }
+    function detach(node) {
+        node.parentNode.removeChild(node);
+    }
+    function element(name) {
+        return document.createElement(name);
+    }
+    function text(data) {
+        return document.createTextNode(data);
+    }
+    function space() {
+        return text(' ');
+    }
+    function attr(node, attribute, value) {
+        if (value == null)
+            node.removeAttribute(attribute);
+        else if (node.getAttribute(attribute) !== value)
+            node.setAttribute(attribute, value);
+    }
+    function children(element) {
+        return Array.from(element.childNodes);
+    }
+    function set_style(node, key, value, important) {
+        node.style.setProperty(key, value, important ? 'important' : '');
+    }
+    function custom_event(type, detail) {
+        const e = document.createEvent('CustomEvent');
+        e.initCustomEvent(type, false, false, detail);
+        return e;
+    }
+
+    let current_component;
+    function set_current_component(component) {
+        current_component = component;
+    }
+
+    const dirty_components = [];
+    const binding_callbacks = [];
+    const render_callbacks = [];
+    const flush_callbacks = [];
+    const resolved_promise = Promise.resolve();
+    let update_scheduled = false;
+    function schedule_update() {
+        if (!update_scheduled) {
+            update_scheduled = true;
+            resolved_promise.then(flush);
+        }
+    }
+    function add_render_callback(fn) {
+        render_callbacks.push(fn);
+    }
+    let flushing = false;
+    const seen_callbacks = new Set();
+    function flush() {
+        if (flushing)
+            return;
+        flushing = true;
+        do {
+            // first, call beforeUpdate functions
+            // and update components
+            for (let i = 0; i < dirty_components.length; i += 1) {
+                const component = dirty_components[i];
+                set_current_component(component);
+                update(component.$$);
+            }
+            dirty_components.length = 0;
+            while (binding_callbacks.length)
+                binding_callbacks.pop()();
+            // then, once components are updated, call
+            // afterUpdate functions. This may cause
+            // subsequent updates...
+            for (let i = 0; i < render_callbacks.length; i += 1) {
+                const callback = render_callbacks[i];
+                if (!seen_callbacks.has(callback)) {
+                    // ...so guard against infinite loops
+                    seen_callbacks.add(callback);
+                    callback();
+                }
+            }
+            render_callbacks.length = 0;
+        } while (dirty_components.length);
+        while (flush_callbacks.length) {
+            flush_callbacks.pop()();
+        }
+        update_scheduled = false;
+        flushing = false;
+        seen_callbacks.clear();
+    }
+    function update($$) {
+        if ($$.fragment !== null) {
+            $$.update();
+            run_all($$.before_update);
+            const dirty = $$.dirty;
+            $$.dirty = [-1];
+            $$.fragment && $$.fragment.p($$.ctx, dirty);
+            $$.after_update.forEach(add_render_callback);
+        }
+    }
+    const outroing = new Set();
+    function transition_in(block, local) {
+        if (block && block.i) {
+            outroing.delete(block);
+            block.i(local);
+        }
+    }
+    function mount_component(component, target, anchor) {
+        const { fragment, on_mount, on_destroy, after_update } = component.$$;
+        fragment && fragment.m(target, anchor);
+        // onMount happens before the initial afterUpdate
+        add_render_callback(() => {
+            const new_on_destroy = on_mount.map(run).filter(is_function);
+            if (on_destroy) {
+                on_destroy.push(...new_on_destroy);
+            }
+            else {
+                // Edge case - component was destroyed immediately,
+                // most likely as a result of a binding initialising
+                run_all(new_on_destroy);
+            }
+            component.$$.on_mount = [];
+        });
+        after_update.forEach(add_render_callback);
+    }
+    function destroy_component(component, detaching) {
+        const $$ = component.$$;
+        if ($$.fragment !== null) {
+            run_all($$.on_destroy);
+            $$.fragment && $$.fragment.d(detaching);
+            // TODO null out other refs, including component.$$ (but need to
+            // preserve final state?)
+            $$.on_destroy = $$.fragment = null;
+            $$.ctx = [];
+        }
+    }
+    function make_dirty(component, i) {
+        if (component.$$.dirty[0] === -1) {
+            dirty_components.push(component);
+            schedule_update();
+            component.$$.dirty.fill(0);
+        }
+        component.$$.dirty[(i / 31) | 0] |= (1 << (i % 31));
+    }
+    function init(component, options, instance, create_fragment, not_equal, props, dirty = [-1]) {
+        const parent_component = current_component;
+        set_current_component(component);
+        const prop_values = options.props || {};
+        const $$ = component.$$ = {
+            fragment: null,
+            ctx: null,
+            // state
+            props,
+            update: noop,
+            not_equal,
+            bound: blank_object(),
+            // lifecycle
+            on_mount: [],
+            on_destroy: [],
+            before_update: [],
+            after_update: [],
+            context: new Map(parent_component ? parent_component.$$.context : []),
+            // everything else
+            callbacks: blank_object(),
+            dirty
+        };
+        let ready = false;
+        $$.ctx = instance
+            ? instance(component, prop_values, (i, ret, ...rest) => {
+                const value = rest.length ? rest[0] : ret;
+                if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
+                    if ($$.bound[i])
+                        $$.bound[i](value);
+                    if (ready)
+                        make_dirty(component, i);
+                }
+                return ret;
+            })
+            : [];
+        $$.update();
+        ready = true;
+        run_all($$.before_update);
+        // `false` as a special case of no DOM component
+        $$.fragment = create_fragment ? create_fragment($$.ctx) : false;
+        if (options.target) {
+            if (options.hydrate) {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                $$.fragment && $$.fragment.l(children(options.target));
+            }
+            else {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                $$.fragment && $$.fragment.c();
+            }
+            if (options.intro)
+                transition_in(component.$$.fragment);
+            mount_component(component, options.target, options.anchor);
+            flush();
+        }
+        set_current_component(parent_component);
+    }
+    class SvelteComponent {
+        $destroy() {
+            destroy_component(this, 1);
+            this.$destroy = noop;
+        }
+        $on(type, callback) {
+            const callbacks = (this.$$.callbacks[type] || (this.$$.callbacks[type] = []));
+            callbacks.push(callback);
+            return () => {
+                const index = callbacks.indexOf(callback);
+                if (index !== -1)
+                    callbacks.splice(index, 1);
+            };
+        }
+        $set() {
+            // overridden by instance, if it has props
+        }
+    }
+
+    function dispatch_dev(type, detail) {
+        document.dispatchEvent(custom_event(type, Object.assign({ version: '3.19.2' }, detail)));
+    }
+    function append_dev(target, node) {
+        dispatch_dev("SvelteDOMInsert", { target, node });
+        append(target, node);
+    }
+    function insert_dev(target, node, anchor) {
+        dispatch_dev("SvelteDOMInsert", { target, node, anchor });
+        insert(target, node, anchor);
+    }
+    function detach_dev(node) {
+        dispatch_dev("SvelteDOMRemove", { node });
+        detach(node);
+    }
+    function attr_dev(node, attribute, value) {
+        attr(node, attribute, value);
+        if (value == null)
+            dispatch_dev("SvelteDOMRemoveAttribute", { node, attribute });
+        else
+            dispatch_dev("SvelteDOMSetAttribute", { node, attribute, value });
+    }
+    function validate_slots(name, slot, keys) {
+        for (const slot_key of Object.keys(slot)) {
+            if (!~keys.indexOf(slot_key)) {
+                console.warn(`<${name}> received an unexpected slot "${slot_key}".`);
+            }
+        }
+    }
+    class SvelteComponentDev extends SvelteComponent {
+        constructor(options) {
+            if (!options || (!options.target && !options.$$inline)) {
+                throw new Error(`'target' is a required option`);
+            }
+            super();
+        }
+        $destroy() {
+            super.$destroy();
+            this.$destroy = () => {
+                console.warn(`Component was already destroyed`); // eslint-disable-line no-console
+            };
+        }
+        $capture_state() { }
+        $inject_state() { }
+    }
+
+    // Client ID and API key from the Developer Console
+    var CLIENT_ID = '541857836176-ooorj15vavsg5e0h0c98jodmp5lt39js.apps.googleusercontent.com';
+    var API_KEY = 'AIzaSyAIYCyk2KaSfTyX67jJuNKYo-AZAtwwZ-U';
+
+    // Array of API discovery doc URLs for APIs used by the quickstart
+    var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+
+    // Authorization scopes required by the API; multiple scopes can be
+    // included, separated by spaces.
+    var SCOPES = 'https://www.googleapis.com/auth/drive';
+
+    var authorizeButton;
+    var signoutButton;
+
+    /**
+     *  On load, called to load the auth2 library and API client library.
+     */
+    function handleClientLoad() {
+        authorizeButton = document.getElementById('authorize_button');
+        signoutButton = document.getElementById('signout_button');
+        gapi.load('client:auth2', initClient);
+    }
+
+    /**
+     *  Initializes the API client library and sets up sign-in state
+     *  listeners.
+     */
+    function initClient() {
+        gapi.client.init({
+            apiKey: API_KEY,
+            clientId: CLIENT_ID,
+            discoveryDocs: DISCOVERY_DOCS,
+            scope: SCOPES
+        }).then(function () {
+            // Listen for sign-in state changes.
+            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+            // Handle the initial sign-in state.
+            updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+            authorizeButton.onclick = handleAuthClick;
+            signoutButton.onclick = handleSignoutClick;
+        }, function (error) {
+            appendPre(JSON.stringify(error, null, 2));
+        });
+    }
+
+    /**
+     *  Called when the signed in status changes, to update the UI
+     *  appropriately. After a sign-in, the API is called.
+     */
+    function updateSigninStatus(isSignedIn) {
+        if (isSignedIn) {
+            authorizeButton.style.display = 'none';
+            signoutButton.style.display = 'block';
+            listFiles();
+        } else {
+            authorizeButton.style.display = 'block';
+            signoutButton.style.display = 'none';
+        }
+    }
+
+    /**
+     *  Sign in the user upon button click.
+     */
+    function handleAuthClick(event) {
+        gapi.auth2.getAuthInstance().signIn();
+    }
+
+    /**
+     *  Sign out the user upon button click.
+     */
+    function handleSignoutClick(event) {
+        gapi.auth2.getAuthInstance().signOut();
+    }
+
+    /**
+     * Append a pre element to the body containing the given message
+     * as its text node. Used to display the results of the API call.
+     *
+     * @param {string} message Text to be placed in pre element.
+     */
+    function appendPre(message) {
+        var pre = document.getElementById('content');
+        var textContent = document.createTextNode(message + '\n');
+        pre.appendChild(textContent);
+    }
+    let idFound;
+    /**
+     * Print files.
+     */
+    function listFiles() {
+        gapi.client.drive.files.list({
+            'pageSize': 10,
+            'fields': "nextPageToken, files(id, name)"
+        }).then(function (response) {
+            appendPre('Files:');
+            var files = response.result.files;
+            if (files && files.length > 0) {
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    appendPre(file.name + ' (' + file.id + ')');
+                    if (file.name == "notes.json") {
+                        idFound = file.id;
+                    }
+                }
+            } else {
+                appendPre('No files found.');
+            }
+        });
+    }
+    // check if there's already a file in the drive
+
+    let brandNew = ()=> {
+
+        let first = `--uploadboundary
+Content-Disposition:form-data;name="metadata";filename="first"
+Content-Type: application/json; charset=UTF-8
+
+{"name":"notes.json","mimeType":"application/json"}
+`;
+        let second = `--uploadboundary
+Content-Disposition:form-data;name="file";filename="blob"
+Content-Type: application/json
+
+${JSON.stringify({starting:"text"})}
+--uploadboundary--
+    `;
+        fetch(`https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&api=${API_KEY}&fields=id`,{
+            method:"POST",
+            headers:{
+                "Content-type":"multipart/related; boundary=uploadboundary",
+                "Content-Length":(first+second).length,
+                "Authorization":"Bearer "+gapi.auth.getToken().access_token
+            },
+            body:first+second
+        }).then(res=> res.json()).then(j=> console.log(j));
+    };
+
+    let performGet =()=> {
+        return fetch(`https://www.googleapis.com/drive/v3/files/${idFound}/?key=${API_KEY}&alt=media`)
+     };
+    let performUpdate =(jdata)=> {
+
+        let first = `--uploadboundary
+Content-Disposition:form-data;name="metadata";filename="first"
+Content-Type: application/json; charset=UTF-8
+
+{"name":"notes.json","mimeType":"application/json"}
+`;
+        let second = `--uploadboundary
+Content-Disposition:form-data;name="file";filename="blob"
+Content-Type: application/json
+
+${JSON.stringify(jdata)}
+--uploadboundary--`;
+    // make the path include the fileID to update
+        fetch(`https://www.googleapis.com/upload/drive/v3/files/${idFound}/?uploadType=multipart&key=${API_KEY}&fields=id`,{
+            method:"PATCH",
+            headers:{
+                "Content-type":"multipart/related; boundary=uploadboundary",
+                "Content-Length":(first+second).length,
+                "Authorization":"Bearer "+gapi.auth.getToken().access_token
+            },
+            body:first+second
+        }).then(res=> res.json()).then(j=> console.log(j));
+        // try the gapi.method
+
+
+    };
+    // so you create a multtipart upload, with the metadata first, and the body next
+    let performUpload = (jdata)=> {
+        if (idFound) {
+            // try to update the contents
+            console.log("updating");
+            performUpdate(jdata);
+        } else {
+            console.log("creating anew");
+            brandNew();
+        }
+    };
+
+    /* src/App.svelte generated by Svelte v3.19.2 */
+    const file = "src/App.svelte";
+
+    function create_fragment(ctx) {
+    	let div1;
+    	let p;
+    	let t1;
+    	let button0;
+    	let t3;
+    	let button1;
+    	let t5;
+    	let pre;
+    	let t6;
+    	let div0;
+    	let canvas0;
+    	let t7;
+    	let canvas1;
+
+    	const block = {
+    		c: function create() {
+    			div1 = element("div");
+    			p = element("p");
+    			p.textContent = "Drive API Quickstart";
+    			t1 = space();
+    			button0 = element("button");
+    			button0.textContent = "Authorize";
+    			t3 = space();
+    			button1 = element("button");
+    			button1.textContent = "Sign Out";
+    			t5 = space();
+    			pre = element("pre");
+    			t6 = space();
+    			div0 = element("div");
+    			canvas0 = element("canvas");
+    			t7 = space();
+    			canvas1 = element("canvas");
+    			add_location(p, file, 5, 4, 98);
+    			attr_dev(button0, "id", "authorize_button");
+    			set_style(button0, "display", "none");
+    			add_location(button0, file, 8, 4, 193);
+    			attr_dev(button1, "id", "signout_button");
+    			set_style(button1, "display", "none");
+    			add_location(button1, file, 9, 4, 269);
+    			attr_dev(pre, "id", "content");
+    			set_style(pre, "white-space", "pre-wrap");
+    			add_location(pre, file, 11, 4, 343);
+    			attr_dev(canvas0, "id", "the-canvas");
+    			add_location(canvas0, file, 13, 6, 433);
+    			attr_dev(div0, "id", "pdfcontainer");
+    			add_location(div0, file, 12, 4, 403);
+    			attr_dev(canvas1, "id", "canvas");
+    			add_location(canvas1, file, 15, 4, 482);
+    			add_location(div1, file, 4, 2, 88);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div1, anchor);
+    			append_dev(div1, p);
+    			append_dev(div1, t1);
+    			append_dev(div1, button0);
+    			append_dev(div1, t3);
+    			append_dev(div1, button1);
+    			append_dev(div1, t5);
+    			append_dev(div1, pre);
+    			append_dev(div1, t6);
+    			append_dev(div1, div0);
+    			append_dev(div0, canvas0);
+    			append_dev(div1, t7);
+    			append_dev(div1, canvas1);
+    		},
+    		p: noop,
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div1);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance($$self, $$props, $$invalidate) {
+    	const writable_props = [];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<App> was created with unknown prop '${key}'`);
+    	});
+
+    	let { $$slots = {}, $$scope } = $$props;
+    	validate_slots("App", $$slots, []);
+    	$$self.$capture_state = () => ({ performUpload, performGet, brandNew });
+    	return [];
+    }
+
+    class App extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance, create_fragment, safe_not_equal, {});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "App",
+    			options,
+    			id: create_fragment.name
+    		});
+    	}
+    }
+
+    let pdfOb = async () => {
+        let ob = {};
+        var API_KEY = 'AIzaSyAIYCyk2KaSfTyX67jJuNKYo-AZAtwwZ-U';
+        // the function that will get called on 
+        ob.ep = null;
+
+        ob.create = async (id) => {
+            let s = document.createElement("script");
+            s.src = "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.3.200/build/pdf.min.js";
+            document.body.append(s);
+            ob.pdfData = await fetch(`https://www.googleapis.com/drive/v3/files/${id}/?key=${API_KEY}&alt=media`).then(res => res.arrayBuffer());
+            ob.pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+            // The workerSrc property shall be specified.
+            ob.pdfjsLib.disableWorker = true;
+            // load the pdf
+            ob.pdf = ob.pdfjsLib.getDocument({ data: ob.pdfData }).promise;
+            ob.holder = document.querySelector("#pdfcontainer");
+            let left = document.createElement("button");
+            left.innerHTML="left";
+            left.style.position="relative";
+            left.style.left="0px";
+            left.style.bottom="0px";
+            left.addEventListener("click",()=> {
+                // progress the page, call ep
+                ob.page -=1;
+                ob.loadPage(ob.page);
+            });
+            let right = document.createElement("button");
+            right.style.position="relative";
+            right.style.right="0px";
+            right.style.bottom="0px";
+            right.innerHTML = "right";
+            right.addEventListener("click",()=> {
+                // progress the page, call ep
+                ob.page +=1;
+                ob.loadPage(ob.page);
+            });
+            ob.holder.append(left);
+            ob.holder.append(right);
+        };
+        ob.loadPage = (p) => {
+            ob.page = parseInt(p);
+            ob.pdf.then(pdf => {
+                console.log('PDF loaded');
+                pdf.getPage(parseInt(p)).then(function (page) {
+                    console.log('Page loaded');
+
+                    var scale = 1;
+                    var viewport = page.getViewport({ scale: scale });
+
+                    // Prepare canvas using PDF page dimensions
+                    var canvas = document.getElementById('the-canvas');
+                    var context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    // Render PDF page into canvas context
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    var renderTask = page.render(renderContext);
+                    renderTask.promise.then(function () {
+                        console.log('Page rendered');
+                    });
+                    ob.ep();
+                });
+            });
+        };
+        return ob
+    };
+
+    let imageOb = () => {
+        let ob = {};
+        // 
+        ob.ep = null;
+        ob.create = (src) => {
+            //
+            let i = new Image();
+            i.src = src;
+            i.onload = () => {
+                ob.holder = document.querySelector("#pdfcontainer");
+                ob.holder.style.overflow= "scroll";
+                ob.holder.style.height=`500px`;
+                ob.holder.append(i);
+            };
+        };
+        ob.page = 0;
+        ob.shiftup = ()=> {
+            ob.page -=1;
+            // # of pages
+            ob.topCalc =ob.holder.getBoundingClientRect().height*ob.page;
+            ob.holder.scrollTop = ob.topCalc;
+            ob.ep();
+        };
+        ob.shiftdown =()=> {
+            ob.page+=1;
+            ob.topCalc =ob.holder.getBoundingClientRect().height*ob.page;
+            ob.holder.scrollTop = ob.topCalc;
+            ob.ep();
+        };
+        return ob
+    };
+
+    // import various functions from drive_code
+
+    let output = [];
+    let run$1 = () => {
+      Notification.requestPermission();
+      // background stuff
+      let can = document.querySelector("#canvas");
+      can.width = 8000;
+      can.height = 8000;
+      let ctx = can.getContext("2d");
+      let oldwidth = ctx.lineWidth;
+      //setInterval(() => {
+      //  can = document.querySelector("#canvas")
+      //  ctx = can.getContext("2d")
+      //  //let existing = ctx.getImageData(0, 0, can.width, can.height)
+      //  can.width = window.scrollMaxX + window.innerWidth
+      //  can.height = window.scrollMaxY + window.innerHeight
+      //  ctx.fillStyle = "#f9d899"
+      //  ctx.fillRect(0, 0, window.scrollMaxX + window.innerWidth, window.innerHeight + window.scrollMaxY)
+      //  //ctx.putImageData(existing,0,0)
+
+      //}, 3000)
+      let expbtn = new ExportBtn();
+      let upload = new LoadBtn();
+      let spec_load = new loadAllBtn();
+
+      let etoggle = false;
+
+      let resize = () => {
+        // start with just bottom and sides
+        let existing = ctx.getImageData(0, 0, can.width, can.height);
+        can.width += 500;
+        can.height += 500;
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, can.width, can.height);
+        ctx.putImageData(existing, 0, 0);
+      };
+      let oncanvas = false;
+      // set it to track under tiny interval
+      // handle the pressing of shift to move the c
+      let mousePos = [0, 0];
+      let shiftdown = (e) => {
+        let starting = {
+          scrollx: window.scrollX,
+          scrolly: window.scrollY,
+        };
+        let canScroll = (e) => {
+          // check if starting has an initial or not
+          if (starting.initialx == undefined) {
+            starting.initialx = e.clientX;
+            starting.initialy = e.clientY;
+          }
+          window.scrollTo(starting.scrollx + (starting.initialx - e.clientX) * 2.0, starting.scrolly + (starting.initialy - e.clientY) * 4.0);
+        };
+        if (e.key == "Shift") {
+          // add a canvas listener
+          can.addEventListener("mousemove", canScroll);
+        }
+        if (e.key == "p") {
+          // try to upload the screenshot that has been saved in the websrc directory
+          if (oncanvas) {
+            let img = new Image();
+            img.onload = () => {
+              ctx.drawImage(img, mousePos[0], mousePos[1]);
+            };
+            fetch("./image.png").then(res => res.blob()).then(blb => {
+              img.src = URL.createObjectURL(blb);
+            });
+          }
+        }
+        if (e.key == "e") {
+          // turn on the eraser
+          etoggle = !etoggle;
+          if (oncanvas && etoggle) {
+            ctx.lineWidth=20;
+            ctx.strokeStyle = "white";
+          } else {
+            ctx.lineWidth = oldwidth;
+            ctx.strokeStyle = "black";
+          }
+        }
+        if (e.key == "N") {
+          // make a textarea box at the point on the screen
+          // are these defined?
+          if (oncanvas) {
+            oncanvas = false;
+            let tb = new NoteElement(mousePos);
+            tb.init();
+            e.preventDefault();
+          }
+        }
+        // add a listener to remove all this on shift up
+        let shiftup = (e) => {
+          if (e.key == "Shift") {
+            can.removeEventListener("mousemove", canScroll);
+            can.removeEventListener("keyup", shiftup);
+            if (window.scrollX + 50 > window.scrollMaxX || window.scrollY + 50 > window.scrollMaxY) {
+              resize();
+            }
+          }
+        };
+
+        document.body.addEventListener("keyup", shiftup);
+      };
+      document.body.addEventListener("keydown", shiftdown);
+
+      let updatePos = (e) => {
+        mousePos[0] = e.pageX;
+        mousePos[1] = e.pageY;
+      };
+      can.addEventListener("mousemove", updatePos);
+      //mouse down
+      let positions = [];
+      can.addEventListener("mousedown", (e) => {
+        can.removeEventListener("mousemove", updatePos);
+        oncanvas = true;
+        let rect = can.getBoundingClientRect();
+        let x = e.clientX - rect.left;
+        let y = e.clientY - rect.topj;
+        let moving = (e) => {
+          let rect = can.getBoundingClientRect();
+          let x = e.clientX - rect.left;
+          let y = e.clientY - rect.top;
+          positions.push(Math.round(x));
+          positions.push(Math.round(y));
+          //ctx.lineTo(x, y)
+          //ctx.stroke()
+          if (x + 50 > can.width || y + 50 > can.height) {
+            resize();
+          }
+        };
+        positions.push(Math.round(x));
+        positions.push(Math.round(y));
+        //ctx.moveTo(x, y)
+        //ctx.beginPath()
+        // create a moving event
+        can.addEventListener("mousemove", moving);
+        let up = (e) => {
+          // draw the line
+          ctx.moveTo(positions[0], positions[1]);
+          ctx.beginPath();
+          for (let i = 2; i < positions.length; i += 2) {
+            ctx.lineTo(positions[i], positions[i + 1]);
+          }
+          ctx.stroke();
+          output = output.concat(positions);
+          output.push(0);
+          positions = [];
+          // remove events
+          can.removeEventListener("mousemove", moving);
+          can.removeEventListener("mouseup", up);
+          can.addEventListener("mousemove", updatePos);
+        };
+        can.addEventListener("mouseup", up);
+      });
+      //new ScrollHelper()
+      //include the download click
+      document.querySelector("#reload").click();
+      // make the iframe
+
+    };
+
+    class NoteElement {
+      constructor(pos, value = "") {
+        let [x, y] = pos;
+        this.element = document.createElement("textarea");
+        this.element.style.position = "absolute";
+        this.element.style.left = x + "px";
+        this.element.style.top = y + "px";
+        this.element.value = value;
+        this.element.style.width = "200px";
+        this.element.style.height = "200px";
+      }
+      init() {
+        document.body.append(this.element);
+        this.element.focus();
+        this.element.selectionEnd += 2;
+        // set the timer
+        // adjust content provided on tab
+        this.keyactions();
+        // setup dragging
+      }
+      mouseup(e) {
+        let func = this.func;
+        document.body.removeEventListener("mousemove", func);
+
+      }
+      mousedown(e) {
+        console.log("down ");
+        let r = this.element.getBoundingClientRect();
+        if (e.pageX - (r.left + window.scrollX) < r.width / 2) {
+          this.startx = e.pageX;
+          this.starty = e.pageY;
+          console.log("down ", this.startx, this.starty);
+          let func = (e) => { this.mousemove(e); };
+          document.body.addEventListener("mousemove", func);
+          this.func = func;
+
+
+        }
+      }
+      mousemove(e) {
+
+        let newx = e.pageX;
+        let newy = e.pageY;
+        let deltax = newx - this.startx;
+        let deltay = newy - this.starty;
+        this.startx = newx;
+        this.starty = newy;
+        this.element.style.left = `${parseFloat(this.element.style.left) + deltax}px`;
+        this.element.style.top = `${parseFloat(this.element.style.top) + deltay}px`;
+      }
+      keyactions() {
+        // 
+        this.element.addEventListener("mousedown", this.mousedown.bind(this));
+        this.element.addEventListener("mouseup", this.mouseup.bind(this));
+
+        //
+        this.element.addEventListener("keydown", (e) => {
+          if (e.key == "ArrowUp") {
+            this.imageob.shiftup();
+          }
+          if (e.key =="ArrowDown") {
+            this.imageob.shiftdown();
+          } 
+          if (e.key == "ArrowRight") {
+            this.pdfob.page+=1;
+            this.pdfob.loadPage(this.pdfob.page);
+          }
+          if (e.key =="ArrowLeft") {
+            this.pdfob.page-=1;
+            this.pdfob.loadPage(this.pdfob.page);
+
+          }
+          if (e.key == "Enter") {
+            let position = this.element.selectionStart;
+            // get last line
+            let lastline = this.element.value.slice(0, position).split("\n").slice(-1)[0];
+            // get amount of whitespace there
+            let white_count = /^\s*/.exec(lastline)[0];
+            this.element.value = this.element.value.slice(0, position) + "\n" + white_count + this.element.value.slice(position);
+            this.element.selectionStart = position + 1 + white_count.length;
+            this.element.selectionEnd = this.element.selectionStart;
+            e.preventDefault();
+
+
+
+          }
+
+          if (e.key == "Control") {
+            this.control = true;
+          }
+          if (e.key == "Alt") {
+            e.preventDefault();
+            this.check();
+          }
+          if (e.key == "Tab") {
+            e.preventDefault();
+            let initial = this.element.selectionStart;
+            this.element.value = this.element.value.slice(0, initial) + "  " + this.element.value.slice(initial);
+            this.element.selectionStart = initial + 2;
+            this.element.selectionEnd = initial + 2;
+
+          }
+          if (e.key == "Delete") ;
+          // 
+          //this.calcHeight()
+        });
+        this.element.addEventListener("keyup", (e) => {
+          if (e.key == "Control") {
+            this.control = false;
+          }
+        });
+      }
+      calcHeight() {
+        // width
+        let largestline = Math.max(... this.element.value.split("\n").map(e => e.length));
+        this.element.style.width = `${largestline * 8 + 30 > 150 ? 150 : largestline * 8 + 30}px`;
+        this.element.style.height = `${this.element.scrollHeight}px`;
+      }
+      check() {
+        console.log("checking");
+        if (/-write-/.exec(this.element.value)) {
+          // write the file back to the active folder
+          // contents gets a line added in front which is the name of the file
+          this.element.value = this.element.value.replace(/-write-/, "");
+          fetch("http://localhost:8040", {
+            method: "POST",
+            body: JSON.stringify({
+              operation: "-savefile-",
+              contents: this.filename + "\n" + this.element.value
+            })
+          });
+        }
+        if (/-file-/.exec(this.element.value)) {
+          this.element.value = this.element.value.replace(/-file-/, "");
+          this.filename = this.element.value;
+          fetch("http://localhost:8040", {
+            method: "POST",
+            body: JSON.stringify({
+              operation: "-file-",
+              contents: this.element.value
+            })
+          }).then(res => res.text()).then(t => {
+            this.element.value = t;
+          });
+        }
+        if (/-loadimg .* -/.exec(this.element.value)) {
+          let imagename = this.element.value.match(/-loadimg (.*) -/)[1];
+          // perform fetch, create image in the #pdfcontainer
+          // make arrow keys up and down scroll through the document height wise
+          this.imageob = imageOb();
+          this.imageob.create(imagename);
+          let closure = ()=> {
+            let lines = this.element.value.split("\n");
+              if (/-top/.exec(lines.slice(-1)[0])) {
+                lines.pop();
+                this.element.value = lines.join("\n");
+              }
+              // 
+              this.element.value+=`\n-top${this.imageob.topCalc}-`;
+              let holder = document.querySelector("#pdfcontainer");
+              document.querySelector("#pdfcontainer").style.position = "absolute";
+              document.querySelector("#pdfcontainer").style.left = `${parseFloat(this.element.style.left) - holder.getBoundingClientRect().width}px`;
+          };
+          this.imageob.ep = closure;
+        }
+        if (/-loadpdf.* -/.exec(this.element.value)) {
+          // create a pdf ob attached to this note
+          let id = this.element.value.match(/-loadpdf(.*?) -/)[1];
+          this.element.value = this.element.value.replace(/-loadpdf.*? -/, id);
+          pdfOb().then(pdfob => {
+            this.pdfob = pdfob;
+            this.pdfob.create(id);
+            // funcntion to put page count in the bottom of element 
+            let closure = ()=> {
+              // if the last line was page something then we should replace it
+              let lines = this.element.value.split("\n");
+              if (/-page/.exec(lines.slice(-1)[0])) {
+                lines.pop();
+                this.element.value = lines.join("\n");
+              }
+              // 
+              this.element.value+=`\n-page${this.pdfob.page}-`;
+            };
+            this.pdfob.ep =closure; 
+            // move the canvas to the left of the note element
+            let holder = document.querySelector("#pdfcontainer");
+            document.querySelector("#pdfcontainer").style.position = "absolute";
+            document.querySelector("#pdfcontainer").style.left = `${parseFloat(this.element.style.left) - holder.getBoundingClientRect().width}px`;
+            document.querySelector("#pdfcontainer").style.top = `${parseFloat(this.element.style.top) - holder.getBoundingClientRect().height}px`;
+          });
+        }
+        if (/-page\d+-/.exec(this.element.value.slice(this.element.startSelection,this.element.endSelection))) {
+          // get the page 
+          let num = this.element.value.slice(this.element.startSelection,this.element.endSelection).match(/-page(\d+)-/)[1];
+          this.pdfob.loadPage(num);
+            let holder = document.querySelector("#pdfcontainer");
+            document.querySelector("#pdfcontainer").style.position = "absolute";
+            document.querySelector("#pdfcontainer").style.left = `${parseFloat(this.element.style.left) - holder.getBoundingClientRect().width}px`;
+        }
+        if (/-start-/.exec(this.element.value)) {
+          this.element.value = this.element.value.replace(/-start-/, "-running-");
+          this.begin = new Date();
+          this.timeout = setTimeout(() => {
+            let notify = new Notification("20 mins passed");
+          }, 20 * 60 * 1000);
+
+        }
+        if (/-stop-/.exec(this.element.value)) {
+          this.end = new Date();
+          this.element.value = this.element.value.replace(/-stop-/, "");
+          let datestring = `${new Date().toUTCString()}: ${((this.end.getTime() - this.begin.getTime()) / (1000 * 60)).toFixed(3)}`;
+          this.element.value = this.element.value.replace(/-running-/, datestring);
+          let position = this.element.selectionStart;
+          clearTimeout(this.timeout);
+        }
+
+        if (/-tex-/.exec(this.element.value)) {
+          let ta = this.element;
+          fetch("http://localhost:8040/", {
+            method: "POST",
+            body: JSON.stringify(
+              {
+                operation: '-latex-',
+                contents: this.element.value.replace(/-tex-/, "")
+              }
+            )
+          }).then(res => {
+            // perform the image fetch
+            let img = new Image();
+            img.onload = () => {
+              let rect = ta.getBoundingClientRect();
+              let can = document.querySelector("canvas");
+              let ctx = can.getContext("2d");
+              ctx.drawImage(img, rect.x + rect.width, rect.y + rect.height);
+            };
+            fetch("./image.png").then(res => res.blob()).then(blb => {
+              img.src = URL.createObjectURL(blb);
+            });
+
+          });
+        }
+        if (/-date-/.exec(this.element.value)) {
+          // remove the command string
+          this.element.value = this.element.value.replace(/-date-/, "");
+          fetch("http://localhost:8040", {
+            method: "POST",
+            body: JSON.stringify(
+              {
+                operation: "-date-",
+                contents: this.element.value
+              }
+            )
+          }).then(res => res.text()).then(t => {
+            this.element.value = t;
+          });
+        }
+      }
+      timer() {
+        this.timer = setInterval(() => { this.check(); }, 10000);
+      }
+    }
+
+    class CanvasLoader {
+      constructor() {
+        // look for active canvas file
+        let can = document.querySelector("#canvas");
+        let img = new Image();
+        img.onload = () => {
+          let ctx = can.getContext("2d");
+          can.width = img.width;
+          can.height = img.height;
+          ctx.drawImage(img, 0, 0);
+        };
+        performGet().then(res=> res.json()).then(j => {
+          img.src = JSON.parse(j).canvas_data;
+        });
+      }
+    }
+
+    class loadAllBtn {
+      constructor() {
+        this.btn = document.createElement("button");
+        this.btn.innerHTML = "load all";
+        this.btn.addEventListener("click", () => {
+          this.load();
+        });
+      }
+      load() {
+        //setInterval(()=>{let dwnload = document.querySelector("#download")
+        //  dwnload.click()
+        //  console.log("downloading")
+        //}, 60 * 1000)
+        fetch("/all").then(res => res.json()).then(j => {
+          // create a selector element and append it to the top 
+          this.select = document.createElement("select");
+          for (let e of j) {
+            // make an option
+            let opt = document.createElement("option");
+            opt.value = `${e.id}`;
+            opt.innerHTML = `${e.size},${e.ctime}`;
+            this.select.append(opt);
+          }
+          document.body.prepend(this.select);
+          this.select.onchange = () => {
+            // send a specific load request for the id given add notes for that file
+            let id = this.select.value;
+            fetch("/idfetch", {
+              method: "POST",
+              headers: {
+                "Content-Type": "text/plain",
+                "Content-Length": this.select.value.length,
+              },
+              body: this.select.value
+            }).then(res => res.json()).then(jsonArray => {
+              // make notes from all of it
+              jsonArray.map(j => {
+                let noteele = new NoteElement([Math.abs(j.x), Math.abs(j.y)], j.value);
+                noteele.init();
+              });
+            });
+
+
+          };
+        });
+      }
+    }
+
+    class LoadBtn {
+      constructor() {
+        this.btn = document.createElement("button");
+        document.body.prepend(this.btn);
+        this.btn.addEventListener("click", () => {
+          this.load();
+        });
+        this.btn.id = "reload";
+        this.btn.innerHTML = "Load prev data";
+      }
+      load() {
+        // call the json loader and the canvasloader
+        let cl = new CanvasLoader();
+        //let jl = new JSONReader()
+        //setInterval(() => {
+        //  let dwnload = document.querySelector("#download")
+        //  dwnload.click()
+        //  console.log("downloading")
+        //}, 60 * 1000)
+      }
+    }
+
+    class ExportBtn {
+      constructor() {
+        this.btn = document.createElement("button");
+        this.btn.innerHTML = "Download";
+        this.btn.id = "download";
+        this.btn.addEventListener("click", () => {
+          let info = this.retrieveInfo();
+          // create a, and use for download
+          // use performUpload
+          // also canvas download
+          let canvas = document.querySelector("#canvas").toDataURL();
+          performUpload(JSON.stringify({canvas_data:canvas}));
+          //fetch("/background", { method: "POST", body: canvas })
+        });
+        document.body.prepend(this.btn);
+        // get a list of the textareas on the screen
+      }
+      retrieveInfo() {
+        let texts = Array(...document.querySelectorAll("textarea"));
+        // for each, get the x,y and value
+        let info = texts.map(ta => {
+          let rect = ta.getBoundingClientRect();
+          return { x: rect.x + window.scrollX, y: rect.y + window.scrollY, value: ta.value }
+        });
+        return info
+      }
+    }
+    //
+
+    const app = new App({
+    	target: document.body,
+    	props: {
+    		name: 'world'
+    	}
+    });
+
+    window.onload =()=> {
+    	handleClientLoad();
+    	run$1();
+    };
+
+    return app;
+
+}());
 //# sourceMappingURL=bundle.js.map

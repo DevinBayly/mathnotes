@@ -11,6 +11,7 @@ let run = () => {
   can.width = 8000
   can.height = 8000
   let ctx = can.getContext("2d")
+  let oldwidth = ctx.lineWidth
   //setInterval(() => {
   //  can = document.querySelector("#canvas")
   //  ctx = can.getContext("2d")
@@ -26,6 +27,7 @@ let run = () => {
   let upload = new LoadBtn()
   let spec_load = new loadAllBtn()
 
+  let etoggle = false
 
   let resize = () => {
     // start with just bottom and sides
@@ -68,6 +70,17 @@ let run = () => {
         fetch("./image.png").then(res => res.blob()).then(blb => {
           img.src = URL.createObjectURL(blb)
         })
+      }
+    }
+    if (e.key == "e") {
+      // turn on the eraser
+      etoggle = !etoggle
+      if (oncanvas && etoggle) {
+        ctx.lineWidth=20
+        ctx.strokeStyle = "white"
+      } else {
+        ctx.lineWidth = oldwidth
+        ctx.strokeStyle = "black"
       }
     }
     if (e.key == "N") {
