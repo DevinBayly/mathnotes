@@ -734,6 +734,11 @@ ${JSON.stringify(jdata)}
         ctx.fillRect(0, 0, can.width, can.height);
         ctx.putImageData(existing, 0, 0);
       };
+      // stops mouse touches changing where the page is
+      document.body.addEventListener("touchstart", function (event) { event.preventDefault(); }, { passive: false });
+      document.body.addEventListener("touchmove", function (event) { event.preventDefault(); }, { passive: false });
+      document.body.addEventListener("touchend", function (event) { event.preventDefault(); }, { passive: false });
+      document.body.addEventListener("touchcancel", function (event) { event.preventDefault(); }, { passive: false });
       let oncanvas = false;
       // set it to track under tiny interval
       // handle the pressing of shift to move the c
@@ -745,6 +750,11 @@ ${JSON.stringify(jdata)}
         };
         let canScroll = (e) => {
           // check if starting has an initial or not
+          if (e.touches) {
+            // handle the e touch
+            e = e.changedTouches[0];
+          }
+
           if (starting.initialx == undefined) {
             starting.initialx = e.clientX;
             starting.initialy = e.clientY;
@@ -754,6 +764,7 @@ ${JSON.stringify(jdata)}
         if (e.key == "Shift") {
           // add a canvas listener
           can.addEventListener("mousemove", canScroll);
+          can.addEventListener("touchmove", canScroll);
         }
         if (e.key == "p") {
           // try to upload the screenshot that has been saved in the websrc directory
@@ -771,7 +782,7 @@ ${JSON.stringify(jdata)}
           // turn on the eraser
           etoggle = !etoggle;
           if (oncanvas && etoggle) {
-            ctx.lineWidth=20;
+            ctx.lineWidth = 20;
             ctx.strokeStyle = "white";
           } else {
             ctx.lineWidth = oldwidth;
@@ -792,6 +803,7 @@ ${JSON.stringify(jdata)}
         let shiftup = (e) => {
           if (e.key == "Shift") {
             can.removeEventListener("mousemove", canScroll);
+            can.removeEventListener("touchmove", canScroll);
             can.removeEventListener("keyup", shiftup);
             if (window.scrollX + 50 > window.scrollMaxX || window.scrollY + 50 > window.scrollMaxY) {
               resize();
@@ -804,22 +816,54 @@ ${JSON.stringify(jdata)}
       document.body.addEventListener("keydown", shiftdown);
 
       let updatePos = (e) => {
-        mousePos[0] = e.pageX;
-        mousePos[1] = e.pageY;
+        // touch check
+        if (e.touches) {
+          e.preventDefault();
+          for (let touch of e.changedTouches) {
+            mousePos[0] = touch.pageX;
+            mousePos[1] = touch.pageY;
+          }
+        } else {
+          mousePos[0] = e.pageX;
+          mousePos[1] = e.pageY;
+        }
       };
-      can.addEventListener("mousemove", updatePos);
       //mouse down
       let positions = [];
-      can.addEventListener("mousedown", (e) => {
+      let createPoint = (e) => {
+        if (e.shiftKey) {
+          // skip the point proces
+          return
+        }
+        // remove the passive tracker
         can.removeEventListener("mousemove", updatePos);
+        can.removeEventListener("touchmove", updatePos);
         oncanvas = true;
         let rect = can.getBoundingClientRect();
-        let x = e.clientX - rect.left;
-        let y = e.clientY - rect.topj;
+        let x, y;
+        if (e.touches) {
+          e.preventDefault();
+          for (let touch of e.changedTouches) {
+            x = touch.clientX - rect.left;
+            y = touch.clientY - rect.top;
+          }
+        } else {
+          x = e.clientX - rect.left;
+          y = e.clientY - rect.top;
+        }
         let moving = (e) => {
           let rect = can.getBoundingClientRect();
-          let x = e.clientX - rect.left;
-          let y = e.clientY - rect.top;
+          let x, y;
+          if (e.touches) {
+            e.preventDefault();
+            for (let touch of e.changedTouches) {
+              x = touch.clientX - rect.left;
+              y = touch.clientY - rect.top;
+            }
+          } else {
+            x = e.clientX - rect.left;
+            y = e.clientY - rect.top;
+          }
           positions.push(Math.round(x));
           positions.push(Math.round(y));
           //ctx.lineTo(x, y)
@@ -834,6 +878,7 @@ ${JSON.stringify(jdata)}
         //ctx.beginPath()
         // create a moving event
         can.addEventListener("mousemove", moving);
+        can.addEventListener("touchmove", moving);
         let up = (e) => {
           // draw the line
           ctx.moveTo(positions[0], positions[1]);
@@ -848,10 +893,16 @@ ${JSON.stringify(jdata)}
           // remove events
           can.removeEventListener("mousemove", moving);
           can.removeEventListener("mouseup", up);
+          can.removeEventListener("touchmove", moving);
+          can.removeEventListener("touchend", up);
           can.addEventListener("mousemove", updatePos);
+          can.addEventListener("touchmove", updatePos);
         };
         can.addEventListener("mouseup", up);
-      });
+        can.addEventListener("touchend", up);
+      };
+      can.addEventListener("mousedown", createPoint);
+      can.addEventListener("touchstart", createPoint);
       //new ScrollHelper()
       //include the download click
       document.querySelector("#reload").click();
@@ -919,15 +970,15 @@ ${JSON.stringify(jdata)}
           if (e.key == "ArrowUp") {
             this.imageob.shiftup();
           }
-          if (e.key =="ArrowDown") {
+          if (e.key == "ArrowDown") {
             this.imageob.shiftdown();
-          } 
+          }
           if (e.key == "ArrowRight") {
-            this.pdfob.page+=1;
+            this.pdfob.page += 1;
             this.pdfob.loadPage(this.pdfob.page);
           }
-          if (e.key =="ArrowLeft") {
-            this.pdfob.page-=1;
+          if (e.key == "ArrowLeft") {
+            this.pdfob.page -= 1;
             this.pdfob.loadPage(this.pdfob.page);
 
           }
@@ -1010,17 +1061,17 @@ ${JSON.stringify(jdata)}
           // make arrow keys up and down scroll through the document height wise
           this.imageob = imageOb();
           this.imageob.create(imagename);
-          let closure = ()=> {
+          let closure = () => {
             let lines = this.element.value.split("\n");
-              if (/-top/.exec(lines.slice(-1)[0])) {
-                lines.pop();
-                this.element.value = lines.join("\n");
-              }
-              // 
-              this.element.value+=`\n-top${this.imageob.topCalc}-`;
-              let holder = document.querySelector("#pdfcontainer");
-              document.querySelector("#pdfcontainer").style.position = "absolute";
-              document.querySelector("#pdfcontainer").style.left = `${parseFloat(this.element.style.left) - holder.getBoundingClientRect().width}px`;
+            if (/-top/.exec(lines.slice(-1)[0])) {
+              lines.pop();
+              this.element.value = lines.join("\n");
+            }
+            // 
+            this.element.value += `\n-top${this.imageob.topCalc}-`;
+            let holder = document.querySelector("#pdfcontainer");
+            document.querySelector("#pdfcontainer").style.position = "absolute";
+            document.querySelector("#pdfcontainer").style.left = `${parseFloat(this.element.style.left) - holder.getBoundingClientRect().width}px`;
           };
           this.imageob.ep = closure;
         }
@@ -1032,7 +1083,7 @@ ${JSON.stringify(jdata)}
             this.pdfob = pdfob;
             this.pdfob.create(id);
             // funcntion to put page count in the bottom of element 
-            let closure = ()=> {
+            let closure = () => {
               // if the last line was page something then we should replace it
               let lines = this.element.value.split("\n");
               if (/-page/.exec(lines.slice(-1)[0])) {
@@ -1040,9 +1091,9 @@ ${JSON.stringify(jdata)}
                 this.element.value = lines.join("\n");
               }
               // 
-              this.element.value+=`\n-page${this.pdfob.page}-`;
+              this.element.value += `\n-page${this.pdfob.page}-`;
             };
-            this.pdfob.ep =closure; 
+            this.pdfob.ep = closure;
             // move the canvas to the left of the note element
             let holder = document.querySelector("#pdfcontainer");
             document.querySelector("#pdfcontainer").style.position = "absolute";
@@ -1050,13 +1101,13 @@ ${JSON.stringify(jdata)}
             document.querySelector("#pdfcontainer").style.top = `${parseFloat(this.element.style.top) - holder.getBoundingClientRect().height}px`;
           });
         }
-        if (/-page\d+-/.exec(this.element.value.slice(this.element.startSelection,this.element.endSelection))) {
+        if (/-page\d+-/.exec(this.element.value.slice(this.element.startSelection, this.element.endSelection))) {
           // get the page 
-          let num = this.element.value.slice(this.element.startSelection,this.element.endSelection).match(/-page(\d+)-/)[1];
+          let num = this.element.value.slice(this.element.startSelection, this.element.endSelection).match(/-page(\d+)-/)[1];
           this.pdfob.loadPage(num);
-            let holder = document.querySelector("#pdfcontainer");
-            document.querySelector("#pdfcontainer").style.position = "absolute";
-            document.querySelector("#pdfcontainer").style.left = `${parseFloat(this.element.style.left) - holder.getBoundingClientRect().width}px`;
+          let holder = document.querySelector("#pdfcontainer");
+          document.querySelector("#pdfcontainer").style.position = "absolute";
+          document.querySelector("#pdfcontainer").style.left = `${parseFloat(this.element.style.left) - holder.getBoundingClientRect().width}px`;
         }
         if (/-start-/.exec(this.element.value)) {
           this.element.value = this.element.value.replace(/-start-/, "-running-");
@@ -1132,7 +1183,7 @@ ${JSON.stringify(jdata)}
           can.height = img.height;
           ctx.drawImage(img, 0, 0);
         };
-        performGet().then(res=> res.json()).then(j => {
+        performGet().then(res => res.json()).then(j => {
           img.src = JSON.parse(j).canvas_data;
         });
       }
@@ -1219,7 +1270,7 @@ ${JSON.stringify(jdata)}
           // use performUpload
           // also canvas download
           let canvas = document.querySelector("#canvas").toDataURL();
-          performUpload(JSON.stringify({canvas_data:canvas}));
+          performUpload(JSON.stringify({ canvas_data: canvas }));
           //fetch("/background", { method: "POST", body: canvas })
         });
         document.body.prepend(this.btn);
